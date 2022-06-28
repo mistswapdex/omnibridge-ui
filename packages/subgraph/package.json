@@ -19,6 +19,7 @@
     "prepare-mainnet-bsc": "mustache config/mainnet-bsc.json subgraph.template.yaml > subgraph.yaml",
     "prepare-bsc-mainnet": "mustache config/bsc-mainnet.json subgraph.template.yaml > subgraph.yaml",
     "prepare-amber-rinkeby": "mustache config/amber-rinkeby.json subgraph.template.yaml > subgraph.yaml",
+    "prepare-rinkeby-amber": "mustache config/rinkeby-amber.json subgraph.template.yaml > subgraph.yaml",
     "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
     "deploy-mainnet": "graph deploy raid-guild/mainnet-omnibridge --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
@@ -31,7 +32,8 @@
     "deploy-poa-xdai": "graph deploy dan13ram/poa-to-xdai-omnibridge --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-mainnet-bsc": "graph deploy dan13ram/mainnet-to-bsc-omnibridge --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
     "deploy-bsc-mainnet": "graph deploy dan13ram/bsc-to-mainnet-omnibridge --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-amber-rinkeby": "graph remove --node http://localhost:8020/ mistswap/amber-rinkeby-omnibridge ; graph create --node http://localhost:8020/ mistswap/amber-rinkeby-omnibridge ; graph deploy --version-label v0.0.1 --node http://localhost:8020/ --ipfs http://localhost:5001 mistswap/amber-rinkeby-omnibridge"
+    "deploy-amber-rinkeby": "graph remove --node http://localhost:8020/ mistswap/amber-rinkeby-omnibridge ; graph create --node http://localhost:8020/ mistswap/amber-rinkeby-omnibridge ; graph deploy --version-label v0.0.1 --node http://localhost:8020/ --ipfs http://localhost:5001 mistswap/amber-rinkeby-omnibridge",
+    "deploy-rinkeby-amber": "graph remove --node http://localhost:8020/ mistswap/rinkeby-amber-omnibridge ; graph create --node http://localhost:8020/ mistswap/rinkeby-amber-omnibridge ; graph deploy --version-label v0.0.1 --node http://localhost:8020/ --ipfs http://localhost:5001 mistswap/rinkeby-amber-omnibridge"
   },
   "devDependencies": {
     "mustache": "^4.2.0"
