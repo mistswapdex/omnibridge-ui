@@ -123,6 +123,30 @@ export function handleNewToken(event: NewTokenRegistered): void {
     token.foreignChainId = 100;
     token.homeName = tokenObject.name;
     token.foreignName = tokenObject.name.slice(0, -7);
+  } else if (network == 'rinkeby' && direction == 'rinkeby-amber') {
+    //suffix is ` on Amber`, 9 char extra length
+    token.homeChainId = 4;
+    token.foreignChainId = 10001;
+    token.homeName = tokenObject.name;
+    token.foreignName = tokenObject.name.slice(0, -9);
+  } else if (network == 'amber' && direction == 'amber-rinkeby') {
+    //suffix is ` on Rinkeby`, 11 char extra length
+    token.homeChainId = 10001;
+    token.foreignChainId = 4;
+    token.homeName = tokenObject.name;
+    token.foreignName = tokenObject.name.slice(0, -11);
+  } else if (network == 'mainnet' && direction == 'mainnet-smartbch') {
+    //suffix is ` from smartBCH`, 12 char extra length
+    token.homeChainId = 1;
+    token.foreignChainId = 10000;
+    token.homeName = tokenObject.name;
+    token.foreignName = tokenObject.name.slice(0, -14);
+  } else if (network == 'smartbch' && direction == 'smartbch-mainnet') {
+    //suffix is ` from Ethereum`, 14 char extra length
+    token.homeChainId = 10000;
+    token.foreignChainId = 1;
+    token.homeName = tokenObject.name;
+    token.foreignName = tokenObject.name.slice(0, -14);
   }
 
   token.save();

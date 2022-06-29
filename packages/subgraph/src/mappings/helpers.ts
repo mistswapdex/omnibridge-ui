@@ -33,6 +33,12 @@ export function getDirection(): String {
       Address.fromString('0x69c707d975e8d883920003CC357E556a4732CD03')
     ) {
       return 'mainnet-bsc';
+    } else if (
+      // replace after deployment
+      address ==
+      Address.fromString('0x0000000000000000000000000000000000000000')
+    ) {
+      return 'mainnet-smartbch';
     }
     return 'mainnet-xdai';
   } else if (network == 'bsc') {
@@ -47,6 +53,12 @@ export function getDirection(): String {
     return 'poa-xdai';
   } else if (network == 'poa-sokol' || network == 'kovan') {
     return 'kovan-sokol';
+  } else if (network == 'smartbch') {
+    return 'smartbch-mainnet';
+  } else if (network == 'amber') {
+    return 'amber-rinkeby';
+  } else if (network == 'rinkeby') {
+    return 'rinkeby-amber';
   }
   return '';
 }
@@ -95,26 +107,27 @@ export function updateHomeTokenInfo(
     token.symbol = tokenObject.symbol;
     token.decimals = tokenObject.decimals;
     token.homeAddress = tokenAddress;
+    token.homeName = tokenObject.name;
 
     let network = dataSource.network();
     if (network == 'xdai') {
       token.homeChainId = 100;
-      token.homeName = tokenObject.name;
     } else if (network == 'poa-core') {
       token.homeChainId = 99;
-      token.homeName = tokenObject.name;
     } else if (network == 'poa-sokol') {
       token.homeChainId = 77;
-      token.homeName = tokenObject.name;
     } else if (network == 'kovan') {
       token.homeChainId = 42;
-      token.homeName = tokenObject.name;
     } else if (network == 'mainnet') {
       token.homeChainId = 1;
-      token.homeName = tokenObject.name;
     } else if (network == 'bsc') {
       token.homeChainId = 56;
-      token.homeName = tokenObject.name;
+    } else if (network == 'rinkeby') {
+      token.homeChainId = 4;
+    } else if (network == 'smartbch') {
+      token.homeChainId = 10000;
+    } else if (network == 'smartbch-amber') {
+      token.homeChainId = 10001;
     }
 
     token.save();
