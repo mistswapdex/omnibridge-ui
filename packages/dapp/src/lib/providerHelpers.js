@@ -5,20 +5,26 @@ import { getNetworkLabel, getRPCUrl, logError } from 'lib/helpers';
 
 const {
   MAINNET_RPC_URL,
+  RINKEBY_RPC_URL,
   KOVAN_RPC_URL,
   BSC_RPC_URL,
   SOKOL_RPC_URL,
   POA_RPC_URL,
   XDAI_RPC_URL,
+  SMARTBCH_RPC_URL,
+  AMBER_RPC_URL,
 } = LOCAL_STORAGE_KEYS;
 
 const LOCAL_STORAGE_KEYS_MAP = {
   1: MAINNET_RPC_URL,
+  4: RINKEBY_RPC_URL,
   42: KOVAN_RPC_URL,
   56: BSC_RPC_URL,
   77: SOKOL_RPC_URL,
   99: POA_RPC_URL,
   100: XDAI_RPC_URL,
+  10000: SMARTBCH_RPC_URL,
+  10001: AMBER_RPC_URL,
 };
 
 const NETWORK_TIMEOUT = 1000;
@@ -56,7 +62,7 @@ export const getValidEthersProvider = async chainId => {
     LOCAL_STORAGE_KEYS_MAP[chainId],
   );
 
-  const rpcURLs = getRPCUrl(chainId, true);
+  const rpcURLs = getRPCUrl(chainId, true) || [];
 
   const provider =
     (await checkRPCHealth(localRPCUrl)) ??

@@ -15,10 +15,12 @@ import {
   BSC_XDAI_BRIDGE,
   defaultTokens,
   ETH_BSC_BRIDGE,
+  ETH_SMARTBCH_BRIDGE,
   ETH_XDAI_BRIDGE,
   KOVAN_SOKOL_BRIDGE,
   networks,
   POA_XDAI_BRIDGE,
+  RINKEBY_AMBER_BRIDGE,
 } from 'lib/networks';
 
 import { getOverriddenMediator, isOverridden } from './overrides';
@@ -37,7 +39,9 @@ export const getNetworkCurrency = chainId =>
   networkCurrencies[chainId] || { name: 'Unknown', symbol: 'Unknown' };
 
 export const getRPCUrl = (chainId, returnAsArray = false) =>
-  returnAsArray ? chainUrls[chainId || 1].rpc : chainUrls[chainId || 1].rpc[0];
+  returnAsArray
+    ? chainUrls[chainId || 1]?.rpc
+    : chainUrls[chainId || 1]?.rpc[0];
 
 export const getExplorerUrl = chainId =>
   (chainUrls[chainId] || chainUrls[1]).explorer;
@@ -186,6 +190,9 @@ const {
   BSC_RPC_URL,
   KOVAN_RPC_URL,
   SOKOL_RPC_URL,
+  RINKEBY_RPC_URL,
+  SMARTBCH_RPC_URL,
+  AMBER_RPC_URL,
 } = LOCAL_STORAGE_KEYS;
 
 export const getRPCKeys = bridgeDirection => {
@@ -208,6 +215,16 @@ export const getRPCKeys = bridgeDirection => {
     case ETH_BSC_BRIDGE:
       return {
         homeRPCKey: BSC_RPC_URL,
+        foreignRPCKey: MAINNET_RPC_URL,
+      };
+    case RINKEBY_AMBER_BRIDGE:
+      return {
+        homeRPCKey: AMBER_RPC_URL,
+        foreignRPCKey: RINKEBY_RPC_URL,
+      };
+    case ETH_SMARTBCH_BRIDGE:
+      return {
+        homeRPCKey: SMARTBCH_RPC_URL,
         foreignRPCKey: MAINNET_RPC_URL,
       };
     case KOVAN_SOKOL_BRIDGE:

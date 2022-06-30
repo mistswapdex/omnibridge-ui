@@ -19,7 +19,7 @@ import { networks } from 'lib/networks';
 import { getEthersProvider } from 'lib/providers';
 import { useCallback, useEffect, useState } from 'react';
 
-const GC_BSC_OMNIBRIDGE = networks[BSC_XDAI_BRIDGE].foreignMediatorAddress;
+const GC_BSC_OMNIBRIDGE = networks[BSC_XDAI_BRIDGE]?.foreignMediatorAddress;
 
 export const useTokenGCOriginOnBSC = token => {
   const { bridgeDirection } = useBridgeDirection();

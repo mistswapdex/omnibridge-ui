@@ -50,7 +50,9 @@ export const useBridgeDirection = () => {
     chainId => {
       const subgraphName =
         homeChainId === chainId ? homeGraphName : foreignGraphName;
-      return `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
+      return subgraphName.startsWith('http')
+        ? subgraphName
+        : `https://api.thegraph.com/subgraphs/name/${subgraphName}`;
     },
     [foreignGraphName, homeChainId, homeGraphName],
   );

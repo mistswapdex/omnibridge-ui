@@ -1,18 +1,22 @@
 import {
   BSC_XDAI_BRIDGE,
   ETH_BSC_BRIDGE,
+  ETH_SMARTBCH_BRIDGE,
   ETH_XDAI_BRIDGE,
   KOVAN_SOKOL_BRIDGE,
   nativeCurrencies,
   POA_XDAI_BRIDGE,
+  RINKEBY_AMBER_BRIDGE,
 } from 'lib/constants';
 
 export {
   BSC_XDAI_BRIDGE,
   ETH_BSC_BRIDGE,
+  ETH_SMARTBCH_BRIDGE,
   ETH_XDAI_BRIDGE,
   KOVAN_SOKOL_BRIDGE,
   POA_XDAI_BRIDGE,
+  RINKEBY_AMBER_BRIDGE,
 };
 
 const ETH_XDAI_BRIDGE_CONFIG = {
@@ -126,6 +130,29 @@ const ETH_BSC_BRIDGE_CONFIG = {
   tokensClaimDisabled: [],
 };
 
+const RINKEBY_AMBER_BRIDGE_CONFIG = {
+  label: 'amber⥊rinkeby',
+  homeChainId: 10001,
+  foreignChainId: 4,
+  enableForeignCurrencyBridge: false,
+  homeWrappedForeignCurrencyAddress: null,
+  wrappedForeignCurrencyAddress:
+    '0xc778417E063141139Fce010982780140Aa0cD5Ab'.toLowerCase(),
+  foreignMediatorAddress:
+    '0x892cBeB36D31351b37a567e984d0208eeEf78a68'.toLowerCase(),
+  homeMediatorAddress:
+    '0xf12FD0d3a039Ab4A5000855D5Cb532A76Fb69498'.toLowerCase(),
+  foreignAmbAddress: '0x92860545c57C29d3005755C9342a02DaB2F49ECe'.toLowerCase(),
+  homeAmbAddress: '0x92860545c57C29d3005755C9342a02DaB2F49ECe'.toLowerCase(),
+  foreignGraphName:
+    'https://thegraph.mistswap.fi/subgraphs/name/mistswap/rinkeby-amber-omnibridge',
+  homeGraphName:
+    'https://thegraph.mistswap.fi/subgraphs/name/mistswap/amber-rinkeby-omnibridge',
+  ambLiveMonitorPrefix: 'http://159.69.106.180:8080',
+  claimDisabled: false,
+  tokensClaimDisabled: [],
+};
+
 const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
   b => b.toLowerCase(),
 );
@@ -136,6 +163,7 @@ const bridgeInfo = {
   [POA_XDAI_BRIDGE]: POA_XDAI_BRIDGE_CONFIG,
   [KOVAN_SOKOL_BRIDGE]: KOVAN_SOKOL_BRIDGE_CONFIG,
   [ETH_BSC_BRIDGE]: ETH_BSC_BRIDGE_CONFIG,
+  [RINKEBY_AMBER_BRIDGE]: RINKEBY_AMBER_BRIDGE_CONFIG,
 };
 
 const getNetworkConfig = bridges => {
@@ -211,6 +239,20 @@ export const defaultTokens = {
       chainId: 1,
       symbol: 'WBNB',
       name: 'Wrapped BNB from BSC',
+    },
+  },
+  [RINKEBY_AMBER_BRIDGE]: {
+    10001: {
+      address: '0x17F4FCF5b6E0A95D4eE331c8529041896A073F9b',
+      chainId: 10001,
+      symbol: 'WBCH',
+      name: 'Wrapped BCH',
+    },
+    4: {
+      address: '0xc778417E063141139Fce010982780140Aa0cD5Ab',
+      chainId: 4,
+      symbol: 'WETH',
+      name: 'Wrapped ETH from Rinkeby',
     },
   },
 };

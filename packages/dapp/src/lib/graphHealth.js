@@ -45,8 +45,13 @@ const failedStatus = {
 
 export const getHealthStatus = async subgraph => {
   try {
+    let graphName = subgraph;
+    if (subgraph.startsWith('http')) {
+      const matches = subgraph.match(/http.*subgraphs\/name\/(.*)/);
+      graphName = (matches && matches[1]) || subgraph;
+    }
     const data = await request(GRAPH_HEALTH_ENDPOINT, healthQuery, {
-      subgraph,
+      subgraph: graphName,
     });
     return extractStatus(data.status);
   } catch (graphHealthError) {
