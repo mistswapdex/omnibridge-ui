@@ -15,6 +15,8 @@ export const BNB_CURRENCY_LOGO =
   'https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png';
 export const POA_CURRENCY_LOGO =
   'https://s2.coinmarketcap.com/static/img/coins/64x64/2548.png';
+export const BCH_CURRENCY_LOGO =
+  'https://s2.coinmarketcap.com/static/img/coins/64x64/1831.png';
 
 export const LARGEST_UINT256 = BigNumber.from(
   '115792089237316195423570985008687907853269984665640564039457584007913129639935',
@@ -79,6 +81,24 @@ export const nativeCurrencies = {
     name: 'POA',
     address: ADDRESS_ZERO,
     symbol: 'POA',
+    mode: 'NATIVE',
+  },
+  10000: {
+    chainId: 10000,
+    decimals: 18,
+    logoURI: BCH_CURRENCY_LOGO,
+    name: 'Bitcoin Cash',
+    address: ADDRESS_ZERO,
+    symbol: 'BCH',
+    mode: 'NATIVE',
+  },
+  10001: {
+    chainId: 10001,
+    decimals: 18,
+    logoURI: BCH_CURRENCY_LOGO,
+    name: 'Bitcoin Cash',
+    address: ADDRESS_ZERO,
+    symbol: 'BCH',
     mode: 'NATIVE',
   },
 };
