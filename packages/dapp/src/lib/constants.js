@@ -253,6 +253,10 @@ export const defaultTokensUrl = {
   77: '',
   99: '',
   56: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/tokenlist.json',
+  10000:
+    'https://raw.githubusercontent.com/mistswapdex/assets/master/blockchains/smartbch/tokenlist.json',
+  10001:
+    'https://raw.githubusercontent.com/mistswapdex/assets/master/blockchains/smartbch/tokenlist.json',
 };
 
 export const GRAPH_HEALTH_ENDPOINT =
