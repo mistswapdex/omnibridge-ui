@@ -1,6 +1,7 @@
 import { Image } from '@chakra-ui/react';
 import BSCLogo from 'assets/bsc-logo.png';
 import EthLogo from 'assets/eth-logo.png';
+import smartBCHLogo from 'assets/smartbch-logo.png';
 import xDAILogo from 'assets/xdai-logo.png';
 import { uriToHttp } from 'lib/helpers';
 import React, { useState } from 'react';
@@ -9,10 +10,13 @@ const BAD_SRCS = {};
 
 const logos = {
   1: EthLogo,
+  4: EthLogo,
   42: EthLogo,
   77: xDAILogo,
   100: xDAILogo,
   56: BSCLogo,
+  10000: smartBCHLogo,
+  10001: smartBCHLogo,
 };
 
 export const Logo = ({ uri, chainId }) => {
