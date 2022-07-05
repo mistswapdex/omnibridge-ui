@@ -2,7 +2,6 @@ import { Flex, Image } from '@chakra-ui/react';
 import DownTriangle from 'assets/down-triangle.svg';
 import UpTriangle from 'assets/up-triangle.svg';
 import { Footer } from 'components/common/Footer';
-import { TermsOfServiceModal } from 'components/modals/TermsOfServiceModal';
 import React from 'react';
 
 export const Layout = ({ children }) => (
@@ -46,6 +45,5 @@ export const Layout = ({ children }) => (
       {children}
     </Flex>
     <Footer />
-    <TermsOfServiceModal />
   </Flex>
 );
