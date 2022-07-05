@@ -269,7 +269,7 @@ export const TokenListModal = ({ isOpen, onClose, onCustom }) => {
       <ModalOverlay background="modalBG">
         <ModalContent
           boxShadow="0px 1rem 2rem #617492"
-          borderRadius="1rem"
+          borderRadius="0.2rem"
           pb={4}
           pt={2}
           maxW="37rem"

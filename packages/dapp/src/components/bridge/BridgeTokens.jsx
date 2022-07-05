@@ -52,7 +52,7 @@ export const BridgeTokens = () => {
           maxW="75rem"
           background="white"
           boxShadow="0px 1rem 2rem rgba(204, 218, 238, 0.8)"
-          borderRadius="1rem"
+          borderRadius="0.2rem"
           direction="column"
           align="center"
           p={{ base: 4, md: 8 }}

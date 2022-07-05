@@ -74,7 +74,7 @@ export const UpdateSettings = ({ close }) => {
         <ModalOverlay background="modalBG">
           <ModalContent
             boxShadow="0px 1rem 2rem #617492"
-            borderRadius="1rem"
+            borderRadius="0.2rem"
             maxW="30rem"
             mx={{ base: 12, lg: 0 }}
           >
