@@ -17,7 +17,7 @@ const fetchDefaultTokens = async chainId => {
         if (chainId === 56) {
           json.tokens = json.tokens.map(token => ({ ...token, chainId }));
         }
-        if (tokenListValidator(json) || chainId === 56) {
+        if (tokenListValidator(json) || [56, 10000, 10001].includes(chainId)) {
           return json.tokens.filter(token => token.chainId === chainId);
         }
       }

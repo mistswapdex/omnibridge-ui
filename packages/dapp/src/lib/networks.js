@@ -148,7 +148,7 @@ const RINKEBY_AMBER_BRIDGE_CONFIG = {
     'https://thegraph.mistswap.fi/subgraphs/name/mistswap/rinkeby-amber-omnibridge',
   homeGraphName:
     'https://thegraph.mistswap.fi/subgraphs/name/mistswap/amber-rinkeby-omnibridge',
-  ambLiveMonitorPrefix: 'http://159.69.106.180:8080',
+  ambLiveMonitorPrefix: 'https://alm.mistswap.fi',
   claimDisabled: false,
   tokensClaimDisabled: [],
 };

@@ -51,7 +51,8 @@ const fetchMode = async (bridgeDirection, token) => {
     token.address,
   );
   if (nativeTokenAddress === ADDRESS_ZERO) return 'erc20';
-  return 'erc677';
+  // return 'erc677'; pat: we are going to proceed with approve & relayTokens instead of transferAndCall
+  return 'erc20';
 };
 
 export const renamexDaiTokensAsGnosis = tokenName => {

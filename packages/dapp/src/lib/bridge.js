@@ -96,7 +96,8 @@ const fetchToTokenDetails = async (bridgeDirection, fromToken, toChainId) => {
       name: toName,
       chainId: toChainId,
       address: toAddress,
-      mode: 'erc677',
+      // mode: 'erc677', pat: we are going to proceed with approve & relayTokens instead of transferAndCall
+      mode: 'erc20',
       mediator: toMediatorAddress,
     };
   }

@@ -86,7 +86,7 @@ export const SettingsProvider = ({ children }) => {
   );
 
   const [infiniteUnlock, setInfiniteUnlock] = useLocalState(
-    false,
+    true,
     INFINITE_UNLOCK,
     {
       valueType: 'boolean',
