@@ -142,8 +142,8 @@ const RINKEBY_AMBER_BRIDGE_CONFIG = {
     '0x892cBeB36D31351b37a567e984d0208eeEf78a68'.toLowerCase(),
   homeMediatorAddress:
     '0xf12FD0d3a039Ab4A5000855D5Cb532A76Fb69498'.toLowerCase(),
-  foreignAmbAddress: '0x92860545c57C29d3005755C9342a02DaB2F49ECe'.toLowerCase(),
-  homeAmbAddress: '0x92860545c57C29d3005755C9342a02DaB2F49ECe'.toLowerCase(),
+  foreignAmbAddress: '0xBf60fdF395E2De2FEAaE7AA697E08f1a6cd652C3'.toLowerCase(),
+  homeAmbAddress: '0x0889215448f0b13a9f6ab35CB7676AC1C679CAF5'.toLowerCase(),
   foreignGraphName:
     'https://thegraph.mistswap.fi/subgraphs/name/mistswap/rinkeby-amber-omnibridge',
   homeGraphName:
