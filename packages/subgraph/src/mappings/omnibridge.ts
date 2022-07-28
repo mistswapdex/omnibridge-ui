@@ -124,17 +124,17 @@ export function handleNewToken(event: NewTokenRegistered): void {
     token.homeName = tokenObject.name;
     token.foreignName = tokenObject.name.slice(0, -7);
   } else if (network == 'rinkeby' && direction == 'rinkeby-amber') {
-    //suffix is ` on Amber`, 9 char extra length
+    //suffix is ` from Amber`, 9 char extra length
     token.homeChainId = 4;
     token.foreignChainId = 10001;
     token.homeName = tokenObject.name;
-    token.foreignName = tokenObject.name.slice(0, -9);
+    token.foreignName = tokenObject.name.slice(0, -11);
   } else if (network == 'amber' && direction == 'amber-rinkeby') {
-    //suffix is ` on Rinkeby`, 11 char extra length
+    //suffix is ` from Rinkeby`, 11 char extra length
     token.homeChainId = 10001;
     token.foreignChainId = 4;
     token.homeName = tokenObject.name;
-    token.foreignName = tokenObject.name.slice(0, -11);
+    token.foreignName = tokenObject.name.slice(0, -13);
   } else if (network == 'mainnet' && direction == 'mainnet-smartbch') {
     //suffix is ` from smartBCH`, 12 char extra length
     token.homeChainId = 1;

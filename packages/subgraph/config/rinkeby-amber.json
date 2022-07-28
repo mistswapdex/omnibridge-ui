@@ -1,6 +1,6 @@
 {
   "network": "rinkeby",
-  "startBlock": "10924706",
-  "omnibridge": "0x892cBeB36D31351b37a567e984d0208eeEf78a68",
-  "amb": "0xBf60fdF395E2De2FEAaE7AA697E08f1a6cd652C3"
+  "startBlock": "11103339",
+  "omnibridge": "0x8cED0D42506675B9385eEaD96143Fc914297C882",
+  "amb": "0x1dD7592587353d87dFEBB626dbb1513F7cb7680C"
 }
