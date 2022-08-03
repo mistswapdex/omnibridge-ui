@@ -105,9 +105,11 @@ export const nativeCurrencies = {
 
 export const nativeCurrencyMediators = {
   1: '0xa6439ca0fcba1d0f80df0be6a17220fed9c9038a'.toLowerCase(),
+  4: '0x56a85f39834303E626e4BB4491d4A487b046F491'.toLowerCase(),
   42: '0x227a6f13aa0dba8912d740c0f88fb1304b2597e1'.toLowerCase(),
   56: '0xefc33f8b2c4d51005585962be7ea20518ea9fd0d'.toLowerCase(),
   99: '0xF6a1Ad94d29679388e533B63bfE1Fd6f1680D23B'.toLowerCase(),
+  10001: '0x649F43870444BBB7Be06c1638502f12999D04E67'.toLowerCase(),
 };
 
 export const networkNames = {

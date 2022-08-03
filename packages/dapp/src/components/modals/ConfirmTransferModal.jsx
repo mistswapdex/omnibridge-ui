@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Divider,
@@ -26,8 +28,10 @@ import { NeedsTransactionsWarning } from 'components/warnings/NeedsTransactionsW
 import { TokenWarnings } from 'components/warnings/TokenWarnings';
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
+import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { useNeedsClaiming } from 'hooks/useNeedsClaiming';
 import { useTokenDisabled } from 'hooks/useTokenDisabled';
+import { nativeCurrencies } from 'lib/constants';
 import {
   formatValue,
   getAccountString,
@@ -37,10 +41,23 @@ import {
 import React, { useCallback, useEffect, useState } from 'react';
 
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
-  const { isGnosisSafe, account } = useWeb3Context();
+  const { isGnosisSafe, account, providerChainId } = useWeb3Context();
+  const { homeChainId } = useBridgeDirection();
+  const isHome = providerChainId === homeChainId;
 
-  const { receiver, fromToken, toToken, fromAmount, toAmount, transfer } =
-    useBridgeContext();
+  const {
+    receiver,
+    fromToken,
+    toToken,
+    fromAmount,
+    toAmount,
+    transfer,
+    homeNativeFee,
+    foreignNativeFee,
+    homeFreeGas,
+    foreignFreeGas,
+    receiverNativeBalance,
+  } = useBridgeContext();
   const needsClaiming = useNeedsClaiming();
   const [fee, setFee] = useState(0);
   useEffect(() => {
@@ -52,10 +69,12 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   }, [fromAmount, toAmount]);
 
   const smallScreen = useBreakpointValue({ base: true, md: false });
-  const [isInflationWarningChecked, setInflationWarningChecked] =
-    useState(false);
-  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] =
-    useState(false);
+  const [isInflationWarningChecked, setInflationWarningChecked] = useState(
+    false,
+  );
+  const [isGnosisSafeWarningChecked, setGnosisSafeWarningChecked] = useState(
+    false,
+  );
 
   const toast = useToast();
   const showError = useCallback(
@@ -95,6 +114,14 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
     isBridgingDisabled ||
     (isInflationToken && !isInflationWarningChecked) ||
     (isGnosisSafe && isSameAddress && !isGnosisSafeWarningChecked);
+
+  const nativeFee = isHome ? homeNativeFee : foreignNativeFee;
+  const nativeFeeText = nativeFee.gt(0)
+    ? `+ ${formatValue(nativeFee, 18)} ${
+        nativeCurrencies[providerChainId].name
+      }`
+    : '';
+  const freeGas = isHome ? foreignFreeGas : homeFreeGas;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -177,8 +204,23 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
               </Flex>
             </Flex>
             <Flex align="center" fontSize="sm" justify="center" mt={4}>
-              {`Bridge Fees ${Number(fee.toFixed(3))}%`}
+              {`Bridge Fees: ${Number(fee.toFixed(3))}% ${nativeFeeText}`}
             </Flex>
+            {freeGas.gt(0) && receiverNativeBalance.eq(0) && (
+              <Flex align="center" fontSize="md" justify="center" mt={4}>
+                <Alert status="info" borderRadius={5}>
+                  <AlertIcon minWidth="20px" />
+                  <Text fontSize="small">
+                    {`Receiving account's balance is zero, we will send small amount of gas (${formatValue(
+                      freeGas,
+                      18,
+                    )} ${
+                      nativeCurrencies[providerChainId].name
+                    }) to help you with your first transaction.`}
+                  </Text>
+                </Alert>
+              </Flex>
+            )}
             <Divider color="#DAE3F0" my={4} />
             <Box
               w="100%"

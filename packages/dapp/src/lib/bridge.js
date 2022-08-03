@@ -12,11 +12,11 @@ import { getEthersProvider } from 'lib/providers';
 import { fetchTokenDetails, fetchTokenName } from 'lib/token';
 
 const getToName = async (fromToken, toChainId, toAddress) => {
-  const { name } = fromToken;
+  const { name, chainId: fromChainId } = fromToken;
   if (toAddress === ADDRESS_ZERO) {
     const fromName = name || (await fetchTokenName(fromToken));
-    return `${fromName} on ${
-      toChainId === 100 ? 'GC' : getNetworkLabel(toChainId)
+    return `${fromName} from ${
+      toChainId === 100 ? 'GC' : getNetworkLabel(fromChainId)
     }`;
   }
   return fetchTokenName({ chainId: toChainId, address: toAddress });
@@ -53,8 +53,10 @@ const fetchToTokenDetails = async (bridgeDirection, fromToken, toChainId) => {
   );
 
   if (fromAddress === ADDRESS_ZERO && fromMode === 'NATIVE') {
-    const { enableForeignCurrencyBridge, homeWrappedForeignCurrencyAddress } =
-      networks[bridgeDirection];
+    const {
+      enableForeignCurrencyBridge,
+      homeWrappedForeignCurrencyAddress,
+    } = networks[bridgeDirection];
     if (!enableForeignCurrencyBridge)
       throw new Error(
         'Bridging native tokens is not supported in this direction',
@@ -296,8 +298,9 @@ export const fetchTokenLimits = async (
           toMediatorContract.totalExecutedPerDay(toTokenAddress, currentDay),
         ]);
 
-    const remainingExecutionLimit =
-      executionDailyLimit.sub(totalExecutedPerDay);
+    const remainingExecutionLimit = executionDailyLimit.sub(
+      totalExecutedPerDay,
+    );
     const remainingRequestLimit = dailyLimit.sub(totalSpentPerDay);
     const remainingLimit = remainingRequestLimit.lt(remainingExecutionLimit)
       ? remainingRequestLimit
@@ -343,7 +346,7 @@ export const relayTokens = async (
   token,
   receiver,
   amount,
-  { shouldReceiveNativeCur, foreignChainId },
+  { shouldReceiveNativeCur, foreignChainId, nativeFee },
 ) => {
   const signer = ethersProvider.getSigner();
   const { mode, mediator, address, helperContractAddress } = token;
@@ -353,28 +356,36 @@ export const relayTokens = async (
         'function wrapAndRelayTokens(address _receiver) public payable',
       ];
       const helperContract = new Contract(helperContractAddress, abi, signer);
-      return helperContract.wrapAndRelayTokens(receiver, { value: amount });
+      return helperContract.wrapAndRelayTokens(receiver, {
+        value: amount.add(nativeFee),
+      });
     }
     case 'erc677': {
-      const abi = ['function transferAndCall(address, uint256, bytes)'];
+      const abi = ['function transferAndCall(address, uint256, bytes) payable'];
       const tokenContract = new Contract(address, abi, signer);
       const foreignHelperContract = getHelperContract(foreignChainId);
       const bytesData =
         shouldReceiveNativeCur && foreignHelperContract
           ? `${foreignHelperContract}${receiver.replace('0x', '')}`
           : receiver;
-      return tokenContract.transferAndCall(mediator, amount, bytesData);
+      return tokenContract.transferAndCall(mediator, amount, bytesData, {
+        value: nativeFee,
+      });
     }
     case 'dedicated-erc20': {
-      const abi = ['function relayTokens(address, uint256)'];
+      const abi = ['function relayTokens(address, uint256) payable'];
       const mediatorContract = new Contract(mediator, abi, signer);
-      return mediatorContract.relayTokens(receiver, amount);
+      return mediatorContract.relayTokens(receiver, amount, {
+        value: nativeFee,
+      });
     }
     case 'erc20':
     default: {
-      const abi = ['function relayTokens(address, address, uint256)'];
+      const abi = ['function relayTokens(address, address, uint256) payable'];
       const mediatorContract = new Contract(mediator, abi, signer);
-      return mediatorContract.relayTokens(token.address, receiver, amount);
+      return mediatorContract.relayTokens(token.address, receiver, amount, {
+        value: nativeFee,
+      });
     }
   }
 };

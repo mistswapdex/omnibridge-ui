@@ -24,14 +24,10 @@ const ETH_XDAI_BRIDGE_CONFIG = {
   homeChainId: 100,
   foreignChainId: 1,
   enableForeignCurrencyBridge: true,
-  homeWrappedForeignCurrencyAddress:
-    '0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1'.toLowerCase(),
-  wrappedForeignCurrencyAddress:
-    '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'.toLowerCase(),
-  foreignMediatorAddress:
-    '0x88ad09518695c6c3712AC10a214bE5109a655671'.toLowerCase(),
-  homeMediatorAddress:
-    '0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d'.toLowerCase(),
+  homeWrappedForeignCurrencyAddress: '0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1'.toLowerCase(),
+  wrappedForeignCurrencyAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'.toLowerCase(),
+  foreignMediatorAddress: '0x88ad09518695c6c3712AC10a214bE5109a655671'.toLowerCase(),
+  homeMediatorAddress: '0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d'.toLowerCase(),
   foreignAmbAddress: '0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'.toLowerCase(),
   homeAmbAddress: '0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59'.toLowerCase(),
   foreignGraphName: 'raid-guild/mainnet-omnibridge',
@@ -46,14 +42,10 @@ const BSC_XDAI_BRIDGE_CONFIG = {
   homeChainId: 100,
   foreignChainId: 56,
   enableForeignCurrencyBridge: true,
-  homeWrappedForeignCurrencyAddress:
-    '0xCa8d20f3e0144a72C6B5d576e9Bd3Fd8557E2B04'.toLowerCase(),
-  wrappedForeignCurrencyAddress:
-    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'.toLowerCase(),
-  foreignMediatorAddress:
-    '0xF0b456250DC9990662a6F25808cC74A6d1131Ea9'.toLowerCase(),
-  homeMediatorAddress:
-    '0x59447362798334d3485c64D1e4870Fde2DDC0d75'.toLowerCase(),
+  homeWrappedForeignCurrencyAddress: '0xCa8d20f3e0144a72C6B5d576e9Bd3Fd8557E2B04'.toLowerCase(),
+  wrappedForeignCurrencyAddress: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c'.toLowerCase(),
+  foreignMediatorAddress: '0xF0b456250DC9990662a6F25808cC74A6d1131Ea9'.toLowerCase(),
+  homeMediatorAddress: '0x59447362798334d3485c64D1e4870Fde2DDC0d75'.toLowerCase(),
   foreignAmbAddress: '0x05185872898b6f94AA600177EF41B9334B1FA48B'.toLowerCase(),
   homeAmbAddress: '0x162E898bD0aacB578C8D5F8d6ca588c13d2A383F'.toLowerCase(),
   foreignGraphName: 'maxaleks/bsc-to-xdai-omnibridge',
@@ -70,14 +62,10 @@ const POA_XDAI_BRIDGE_CONFIG = {
   homeChainId: 100,
   foreignChainId: 99,
   enableForeignCurrencyBridge: true,
-  homeWrappedForeignCurrencyAddress:
-    '0x9fe3864F9Ae7cfb5668Dae90C0e20c4C3D437664'.toLowerCase(),
-  wrappedForeignCurrencyAddress:
-    '0xD2CFBCDbDF02c42951ad269dcfFa27c02151Cebd'.toLowerCase(),
-  foreignMediatorAddress:
-    '0x8134470b7CF6f57Faee2076adf8F7301fD5865a5'.toLowerCase(),
-  homeMediatorAddress:
-    '0x63be59CF177cA9bb317DE8C4aa965Ddda93CB9d7'.toLowerCase(),
+  homeWrappedForeignCurrencyAddress: '0x9fe3864F9Ae7cfb5668Dae90C0e20c4C3D437664'.toLowerCase(),
+  wrappedForeignCurrencyAddress: '0xD2CFBCDbDF02c42951ad269dcfFa27c02151Cebd'.toLowerCase(),
+  foreignMediatorAddress: '0x8134470b7CF6f57Faee2076adf8F7301fD5865a5'.toLowerCase(),
+  homeMediatorAddress: '0x63be59CF177cA9bb317DE8C4aa965Ddda93CB9d7'.toLowerCase(),
   foreignAmbAddress: '0xB2218bdEbe8e90f80D04286772B0968ead666942'.toLowerCase(),
   homeAmbAddress: '0xc2d77d118326c33BBe36EbeAbf4F7ED6BC2dda5c'.toLowerCase(),
   foreignGraphName: 'dan13ram/poa-to-xdai-omnibridge',
@@ -92,14 +80,10 @@ const KOVAN_SOKOL_BRIDGE_CONFIG = {
   homeChainId: 77,
   foreignChainId: 42,
   enableForeignCurrencyBridge: true,
-  homeWrappedForeignCurrencyAddress:
-    '0x3D14493DF2B479E6BABE82Fc2373F91622bac025'.toLowerCase(),
-  wrappedForeignCurrencyAddress:
-    '0x89ded978ef13CDBb88c0a5A959B66B552cf3355a'.toLowerCase(),
-  foreignMediatorAddress:
-    '0xA960d095470f7509955d5402e36d9DB984B5C8E2'.toLowerCase(),
-  homeMediatorAddress:
-    '0x40CdfF886715A4012fAD0219D15C98bB149AeF0e'.toLowerCase(),
+  homeWrappedForeignCurrencyAddress: '0x3D14493DF2B479E6BABE82Fc2373F91622bac025'.toLowerCase(),
+  wrappedForeignCurrencyAddress: '0x89ded978ef13CDBb88c0a5A959B66B552cf3355a'.toLowerCase(),
+  foreignMediatorAddress: '0xA960d095470f7509955d5402e36d9DB984B5C8E2'.toLowerCase(),
+  homeMediatorAddress: '0x40CdfF886715A4012fAD0219D15C98bB149AeF0e'.toLowerCase(),
   foreignAmbAddress: '0xFe446bEF1DbF7AFE24E81e05BC8B271C1BA9a560'.toLowerCase(),
   homeAmbAddress: '0xFe446bEF1DbF7AFE24E81e05BC8B271C1BA9a560'.toLowerCase(),
   foreignGraphName: 'dan13ram/kovan-omnibridge',
@@ -115,12 +99,9 @@ const ETH_BSC_BRIDGE_CONFIG = {
   foreignChainId: 1,
   enableForeignCurrencyBridge: false,
   homeWrappedForeignCurrencyAddress: null,
-  wrappedForeignCurrencyAddress:
-    '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'.toLowerCase(),
-  foreignMediatorAddress:
-    '0x69c707d975e8d883920003CC357E556a4732CD03'.toLowerCase(),
-  homeMediatorAddress:
-    '0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218'.toLowerCase(),
+  wrappedForeignCurrencyAddress: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'.toLowerCase(),
+  foreignMediatorAddress: '0x69c707d975e8d883920003CC357E556a4732CD03'.toLowerCase(),
+  homeMediatorAddress: '0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218'.toLowerCase(),
   foreignAmbAddress: '0x07955be2967B655Cf52751fCE7ccC8c61EA594e2'.toLowerCase(),
   homeAmbAddress: '0x6943A218d58135793F1FE619414eD476C37ad65a'.toLowerCase(),
   foreignGraphName: 'dan13ram/mainnet-to-bsc-omnibridge',
@@ -136,14 +117,11 @@ const RINKEBY_AMBER_BRIDGE_CONFIG = {
   foreignChainId: 4,
   enableForeignCurrencyBridge: false,
   homeWrappedForeignCurrencyAddress: null,
-  wrappedForeignCurrencyAddress:
-    '0xc778417E063141139Fce010982780140Aa0cD5Ab'.toLowerCase(),
-  foreignMediatorAddress:
-    '0x892cBeB36D31351b37a567e984d0208eeEf78a68'.toLowerCase(),
-  homeMediatorAddress:
-    '0xf12FD0d3a039Ab4A5000855D5Cb532A76Fb69498'.toLowerCase(),
-  foreignAmbAddress: '0xBf60fdF395E2De2FEAaE7AA697E08f1a6cd652C3'.toLowerCase(),
-  homeAmbAddress: '0x0889215448f0b13a9f6ab35CB7676AC1C679CAF5'.toLowerCase(),
+  wrappedForeignCurrencyAddress: '0xc778417E063141139Fce010982780140Aa0cD5Ab'.toLowerCase(),
+  foreignMediatorAddress: '0xeC6Cb22C7794c65a602376e9EbD595f8B4265225'.toLowerCase(),
+  homeMediatorAddress: '0xc9Dd863E086181Aa6c7630df8fE5fA89979d4DD3'.toLowerCase(),
+  foreignAmbAddress: '0x1dD7592587353d87dFEBB626dbb1513F7cb7680C'.toLowerCase(),
+  homeAmbAddress: '0xeF277e492B1BD9b797855C1Af0595F15d0597Fa1'.toLowerCase(),
   foreignGraphName:
     'https://thegraph.mistswap.fi/subgraphs/name/mistswap/rinkeby-amber-omnibridge',
   homeGraphName:
@@ -153,9 +131,9 @@ const RINKEBY_AMBER_BRIDGE_CONFIG = {
   tokensClaimDisabled: [],
 };
 
-const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(' ').map(
-  b => b.toLowerCase(),
-);
+const ENABLED_BRIDGES = process.env.REACT_APP_ENABLED_BRIDGES.split(
+  ' ',
+).map(b => b.toLowerCase());
 
 const bridgeInfo = {
   [ETH_XDAI_BRIDGE]: ETH_XDAI_BRIDGE_CONFIG,

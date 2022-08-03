@@ -1,12 +1,17 @@
 import { useWeb3Context } from 'contexts/Web3Context';
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { useBridgeDirection } from 'hooks/useBridgeDirection';
 import { logError } from 'lib/helpers';
 import { getEthersProvider } from 'lib/providers';
 import { useCallback, useEffect, useState } from 'react';
 
 export const useMediatorInfo = () => {
-  const { homeChainId, homeMediatorAddress } = useBridgeDirection();
+  const {
+    homeChainId,
+    homeMediatorAddress,
+    foreignChainId,
+    foreignMediatorAddress,
+  } = useBridgeDirection();
   const [currentDay, setCurrentDay] = useState();
   const [feeManagerAddress, setFeeManagerAddress] = useState();
   const [fetching, setFetching] = useState(false);
@@ -19,6 +24,11 @@ export const useMediatorInfo = () => {
   const [foreignToHomeFeeType, setForeignToHomeFeeType] = useState(
     '0x03be2b2875cb41e0e77355e802a16769bb8dfcf825061cde185c73bf94f12625',
   );
+  const [homeNativeFee, setHomeNativeFee] = useState(BigNumber.from(0));
+  const [foreignNativeFee, setForeignNativeFee] = useState(BigNumber.from(0));
+
+  const [homeFreeGas, setHomeFreeGas] = useState(BigNumber.from(0));
+  const [foreignFreeGas, setForeignFreeGas] = useState(BigNumber.from(0));
 
   const calculateFees = useCallback(async (managerAddress, chainId) => {
     const ethersProvider = await getEthersProvider(chainId);
@@ -39,6 +49,68 @@ export const useMediatorInfo = () => {
     setForeignToHomeFeeType(home);
     setHomeToForeignFeeType(foreign);
   }, []);
+
+  const getNativeFees = useCallback(async () => {
+    const getNativeFee = async (mediatorAddress, chainId) => {
+      const ethersProvider = await getEthersProvider(chainId);
+      const abi = [
+        'function passMessageFlatFee() public view returns (uint256)',
+      ];
+      const mediatorContract = new Contract(
+        mediatorAddress,
+        abi,
+        ethersProvider,
+      );
+
+      let fee = BigNumber.from(0);
+      try {
+        fee = await mediatorContract.passMessageFlatFee();
+      } catch {}
+      return fee;
+    };
+
+    const [home, foreign] = await Promise.all([
+      getNativeFee(homeMediatorAddress, homeChainId),
+      getNativeFee(foreignMediatorAddress, foreignChainId),
+    ]);
+    setHomeNativeFee(home);
+    setForeignNativeFee(foreign);
+  }, [
+    homeMediatorAddress,
+    homeChainId,
+    foreignMediatorAddress,
+    foreignChainId,
+  ]);
+
+  const getFreeGasValues = useCallback(async () => {
+    const getFreeGas = async (mediatorAddress, chainId) => {
+      const ethersProvider = await getEthersProvider(chainId);
+      const abi = ['function freeGasAmount() public view returns (uint256)'];
+      const mediatorContract = new Contract(
+        mediatorAddress,
+        abi,
+        ethersProvider,
+      );
+
+      let freeGas = BigNumber.from(0);
+      try {
+        freeGas = await mediatorContract.freeGasAmount();
+      } catch {}
+      return freeGas;
+    };
+
+    const [home, foreign] = await Promise.all([
+      getFreeGas(homeMediatorAddress, homeChainId),
+      getFreeGas(foreignMediatorAddress, foreignChainId),
+    ]);
+    setHomeFreeGas(home);
+    setForeignFreeGas(foreign);
+  }, [
+    homeMediatorAddress,
+    homeChainId,
+    foreignMediatorAddress,
+    foreignChainId,
+  ]);
 
   const checkRewardAddress = useCallback(
     async (managerAddress, chainId) => {
@@ -94,6 +166,8 @@ export const useMediatorInfo = () => {
         await Promise.all([
           checkRewardAddress(managerAddress, homeChainId),
           calculateFees(managerAddress, homeChainId),
+          getNativeFees(),
+          getFreeGasValues(),
         ]);
       } catch (error) {
         logError('Error fetching mediator info:', error);
@@ -102,7 +176,14 @@ export const useMediatorInfo = () => {
       }
     };
     processMediatorData();
-  }, [homeMediatorAddress, homeChainId, calculateFees, checkRewardAddress]);
+  }, [
+    homeMediatorAddress,
+    homeChainId,
+    calculateFees,
+    checkRewardAddress,
+    getNativeFees,
+    getFreeGasValues,
+  ]);
 
   return {
     fetching,
@@ -111,5 +192,9 @@ export const useMediatorInfo = () => {
     isRewardAddress,
     homeToForeignFeeType,
     foreignToHomeFeeType,
+    homeNativeFee,
+    foreignNativeFee,
+    homeFreeGas,
+    foreignFreeGas,
   };
 };

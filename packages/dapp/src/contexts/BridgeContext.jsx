@@ -15,6 +15,7 @@ import {
   logError,
   parseValue,
 } from 'lib/helpers';
+import { getEthersProvider } from 'lib/providers';
 import { fetchTokenDetails } from 'lib/token';
 import React, {
   useCallback,
@@ -37,8 +38,12 @@ export const BridgeProvider = ({ children }) => {
     providerChainId,
     loading: isConnecting,
   } = useWeb3Context();
-  const { bridgeDirection, getBridgeChainId, homeChainId, foreignChainId } =
-    useBridgeDirection();
+  const {
+    bridgeDirection,
+    getBridgeChainId,
+    homeChainId,
+    foreignChainId,
+  } = useBridgeDirection();
 
   const [receiver, setReceiver] = useState('');
   const [amountInput, setAmountInput] = useState('');
@@ -64,10 +69,18 @@ export const BridgeProvider = ({ children }) => {
     homeToForeignFeeType,
     foreignToHomeFeeType,
     currentDay,
+    homeNativeFee,
+    foreignNativeFee,
+    homeFreeGas,
+    foreignFreeGas,
   } = useMediatorInfo();
 
   const isHome = providerChainId === homeChainId;
+  const nativeFee = isHome ? homeNativeFee : foreignNativeFee;
   const feeType = isHome ? homeToForeignFeeType : foreignToHomeFeeType;
+  const [receiverNativeBalance, setReceiverNativeBalance] = useState(
+    BigNumber.from(0),
+  );
 
   const getToAmount = useCallback(
     async amount =>
@@ -194,6 +207,7 @@ export const BridgeProvider = ({ children }) => {
             toToken?.address === ADDRESS_ZERO &&
             toToken?.mode === 'NATIVE',
           foreignChainId,
+          nativeFee,
         },
       );
       setTxHash(tx.hash);
@@ -218,6 +232,7 @@ export const BridgeProvider = ({ children }) => {
     fromAmount,
     shouldReceiveNativeCur,
     foreignChainId,
+    nativeFee,
   ]);
 
   const switchTokens = useCallback(() => {
@@ -315,6 +330,17 @@ export const BridgeProvider = ({ children }) => {
     }
   }, [fromToken, toToken, foreignChainId]);
 
+  useEffect(() => {
+    const getReceiverBalance = async () => {
+      try {
+        const provider = await getEthersProvider(foreignChainId);
+        const balance = await provider.getBalance(receiver || account);
+        setReceiverNativeBalance(balance);
+      } catch {}
+    };
+    getReceiverBalance();
+  }, [foreignChainId, receiver, account, setReceiverNativeBalance]);
+
   const bridgeContext = useMemo(
     () => ({
       // amounts & balances
@@ -346,6 +372,13 @@ export const BridgeProvider = ({ children }) => {
       shouldReceiveNativeCur,
       setShouldReceiveNativeCur,
       currentDay,
+      // native coin flat fees
+      homeNativeFee,
+      foreignNativeFee,
+      // free gas amounts
+      homeFreeGas,
+      foreignFreeGas,
+      receiverNativeBalance,
     }),
     [
       // amounts & balances
@@ -377,6 +410,13 @@ export const BridgeProvider = ({ children }) => {
       shouldReceiveNativeCur,
       setShouldReceiveNativeCur,
       currentDay,
+      // native coin flat fees
+      homeNativeFee,
+      foreignNativeFee,
+      // free gas amounts
+      homeFreeGas,
+      foreignFreeGas,
+      receiverNativeBalance,
     ],
   );
 
