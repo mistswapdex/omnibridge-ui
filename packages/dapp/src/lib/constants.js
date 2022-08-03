@@ -237,12 +237,14 @@ export const chainUrls = {
   //   explorer: 'https://sonar.cash',
   //   chainId: 10000,
   //   name: networkNames[10000],
+  //   ensAddress: "0xCfb86556760d03942EBf1ba88a9870e67D77b627"
   // },
   10001: {
     rpc: REACT_APP_AMBER_RPC_URL.split(' '),
     explorer: 'https://testnet.sonar.cash',
     chainId: 10001,
     name: networkNames[10001],
+    ensAddress: '0x32f1FBE59D771bdB7FB247FE97A635f50659202b',
   },
 };
 
@@ -253,10 +255,8 @@ export const defaultTokensUrl = {
   77: '',
   99: '',
   56: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/smartchain/tokenlist.json',
-  10000:
-    'https://raw.githubusercontent.com/mistswapdex/assets/master/blockchains/smartbch/tokenlist.json',
-  10001:
-    'https://raw.githubusercontent.com/mistswapdex/assets/master/blockchains/smartbch-amber/tokenlist.json',
+  10000: 'https://raw.githubusercontent.com/mistswapdex/assets/master/blockchains/smartbch/tokenlist.json',
+  10001: 'https://raw.githubusercontent.com/mistswapdex/assets/master/blockchains/smartbch-amber/tokenlist.json',
 };
 
 export const GRAPH_HEALTH_ENDPOINT =

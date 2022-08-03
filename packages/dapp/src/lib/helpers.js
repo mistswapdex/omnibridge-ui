@@ -43,6 +43,9 @@ export const getRPCUrl = (chainId, returnAsArray = false) =>
     ? chainUrls[chainId || 1]?.rpc
     : chainUrls[chainId || 1]?.rpc[0];
 
+export const getNetworkEnsAddress = chainId =>
+  (chainUrls[chainId] || {}).ensAddress;
+
 export const getExplorerUrl = chainId =>
   (chainUrls[chainId] || chainUrls[1]).explorer;
 
@@ -166,7 +169,12 @@ export const fetchQueryParams = search => {
 };
 
 export const getAccountString = address => {
-  const account = getAddress(address);
+  let account;
+  try {
+    account = getAddress(address);
+  } catch {
+    account = address;
+  }
   const len = account.length;
   return `0x${account.substr(2, 4)}...${account.substr(len - 4, len - 1)}`;
 };
@@ -241,8 +249,9 @@ export const getHelperContract = chainId =>
 
 export const getMediatorAddressWithoutOverride = (bridgeDirection, chainId) => {
   if (!bridgeDirection || !chainId) return null;
-  const { homeChainId, homeMediatorAddress, foreignMediatorAddress } =
-    networks[bridgeDirection];
+  const { homeChainId, homeMediatorAddress, foreignMediatorAddress } = networks[
+    bridgeDirection
+  ];
   return homeChainId === chainId
     ? homeMediatorAddress.toLowerCase()
     : foreignMediatorAddress.toLowerCase();

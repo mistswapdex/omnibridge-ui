@@ -1,7 +1,13 @@
 import { ethers } from 'ethers';
 import memoize from 'fast-memoize';
 import { LOCAL_STORAGE_KEYS } from 'lib/constants';
-import { getNetworkLabel, getRPCUrl, logError } from 'lib/helpers';
+import {
+  getNetworkEnsAddress,
+  getNetworkLabel,
+  getNetworkName,
+  getRPCUrl,
+  logError,
+} from 'lib/helpers';
 
 const {
   MAINNET_RPC_URL,
@@ -29,13 +35,21 @@ const LOCAL_STORAGE_KEYS_MAP = {
 
 const NETWORK_TIMEOUT = 1000;
 
-const memoized = memoize(
-  url => new ethers.providers.StaticJsonRpcProvider(url),
-);
+const memoized = memoize((url, chainId) => {
+  const provider = new ethers.providers.StaticJsonRpcProvider(
+    url,
+    getNetworkEnsAddress(chainId) && {
+      ensAddress: getNetworkEnsAddress(chainId),
+      chainId: Number(chainId),
+      name: getNetworkName(chainId),
+    },
+  );
+  return provider;
+});
 
-const checkRPCHealth = async url => {
+const checkRPCHealth = async (url, chainId) => {
   if (!url) return null;
-  const tempProvider = memoized(url);
+  const tempProvider = memoized(url, chainId);
   if (!tempProvider) return null;
   try {
     await Promise.race([
@@ -65,9 +79,11 @@ export const getValidEthersProvider = async chainId => {
   const rpcURLs = getRPCUrl(chainId, true) || [];
 
   const provider =
-    (await checkRPCHealth(localRPCUrl)) ??
-    (await checkRPCHealth(sessionRPCUrl)) ??
-    (await Promise.all(rpcURLs.map(checkRPCHealth))).filter(p => !!p)[0];
+    (await checkRPCHealth(localRPCUrl, chainId)) ??
+    (await checkRPCHealth(sessionRPCUrl, chainId)) ??
+    (
+      await Promise.all(rpcURLs.map(url => checkRPCHealth(url, chainId)))
+    ).filter(p => !!p)[0];
   if (provider?.connection?.url) {
     window.sessionStorage.setItem(sessionStorageKey, provider.connection.url);
   }

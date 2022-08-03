@@ -10,14 +10,43 @@ import {
 import { useBridgeContext } from 'contexts/BridgeContext';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { utils } from 'ethers';
+import { useBridgeDirection } from 'hooks/useBridgeDirection';
+import { getEthersProvider } from 'lib/providers';
+import debounce from 'lodash.debounce';
 import React, { useCallback } from 'react';
 
 export const AdvancedMenu = () => {
-  const { isGnosisSafe } = useWeb3Context();
+  const { isGnosisSafe, providerChainId } = useWeb3Context();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { receiver, setReceiver } = useBridgeContext();
+  const { getBridgeChainId } = useBridgeDirection();
+  const otherChainId = getBridgeChainId(providerChainId);
 
   const isMenuOpen = isOpen || isGnosisSafe;
+
+  // eslint-disable-next-line
+  const checkEnsAndSetReceiver = useCallback(
+    debounce(async value => {
+      if (!utils.isAddress(value)) {
+        const otherEthersProvider = await getEthersProvider(otherChainId);
+        try {
+          const address = await otherEthersProvider.resolveName(value);
+          if (address) {
+            setReceiver(address);
+          }
+        } catch {}
+      }
+    }, 200),
+    [setReceiver, otherChainId],
+  );
+
+  const onChange = useCallback(
+    value => {
+      setReceiver(value);
+      checkEnsAndSetReceiver(value);
+    },
+    [setReceiver, checkEnsAndSetReceiver],
+  );
 
   const onClick = useCallback(() => {
     if (isMenuOpen) {
@@ -54,7 +83,7 @@ export const AdvancedMenu = () => {
               _placeholder={{ color: 'greyText' }}
               color="black"
               value={receiver}
-              onChange={e => setReceiver(e.target.value)}
+              onChange={e => onChange(e.target.value)}
               isInvalid={!!receiver && !utils.isAddress(receiver)}
               _focus={{ boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.6)' }}
               _invalid={{
